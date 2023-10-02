@@ -1,0 +1,7 @@
+<section class="app-form" *ngIf="show">
+  <div class="email-container">
+    <h2>{{ 'VERIFY_EMAIL' | translate }}</h2>
+    <h4>{{ 'EMAIL.1' | translate }}<span id="email">{{ email }}</span>{{ 'EMAIL.2' | translate }}.</h4>
+    <button id="resend-btn" class="btn btn-primary" (click)="resendEmail()">{{ 'RESEND_EMAIL' | translate }}</button>
+  </div>
+</section>

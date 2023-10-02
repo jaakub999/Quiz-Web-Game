@@ -1,0 +1,17 @@
+.language-buttons-container {
+  position: fixed;
+  top: 5px;
+  right: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.language-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  color: #333;
+  margin-right: 10px;
+  outline: none;
+}

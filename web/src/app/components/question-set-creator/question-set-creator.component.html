@@ -1,0 +1,63 @@
+<div class="app-form">
+  <app-menu></app-menu>
+  <div class="form-container">
+    <h2 style="text-align: center">{{ 'CREATOR_HEADER' | translate}}!</h2>
+    <br>
+    <div>
+      <label style="font-weight: bold; font-size: 12px">{{ 'QUESTION_NR' | translate }}</label>
+    </div>
+    <div style="margin-top: 1vh">
+      <label style="font-weight: bold; font-size: 12px">{{ 'NUMBER_OF_QUESTIONS' | translate }}:</label>
+    </div>
+    <br>
+    <div class="left-column">
+      <textarea name="content" placeholder="{{ 'QUESTION_CONTENT' | translate }}"></textarea>
+    </div>
+    <div class="right-column">
+      <div class="radio-container">
+        <input type="radio" class="radio-button" name="radio">
+        <label class="radio-label">A</label>
+        <div class="input-container">
+          <input type="text" class="input-field" placeholder="{{ 'INSERT' | translate }} A" autocomplete="off">
+        </div>
+      </div>
+      <div class="radio-container">
+        <input type="radio" class="radio-button" name="radio">
+        <label class="radio-label">B</label>
+        <div class="input-container">
+          <input type="text" class="input-field" placeholder="{{ 'INSERT' | translate }} B" autocomplete="off">
+        </div>
+      </div>
+      <div class="radio-container">
+        <input type="radio" class="radio-button" name="radio">
+        <label class="radio-label">C</label>
+        <div class="input-container">
+          <input type="text" class="input-field" placeholder="{{ 'INSERT' | translate }} C" autocomplete="off">
+        </div>
+      </div>
+      <div class="radio-container">
+        <input type="radio" class="radio-button" name="radio">
+        <label class="radio-label">D</label>
+        <div class="input-container">
+          <input type="text" class="input-field" placeholder="{{ 'INSERT' | translate }} D" autocomplete="off">
+        </div>
+      </div>
+      <div class="input-container">
+        <input type="text" class="input-field" style="width: 283px" placeholder="{{ 'CATEGORY' | translate }}">
+      </div>
+      <br>
+      <div class="input-container">
+        {{ 'POINTS' | translate }}:
+        <input type="range" min="1" max="10" [(ngModel)]="sliderValue" class="slider">
+        {{ sliderValue }}
+      </div>
+      <div class="input-container" style="margin-top: 13px">
+        <button class="btn btn-primary btn-image" (click)="fileInput.click()">{{ 'IMAGE_FILE' | translate }}</button>
+        <input type="file" id="fileInput" #fileInput style="display: none" (change)="onFileSelected($event)" accept="image/*">
+      </div>
+    </div>
+  </div>
+  <div>
+    <button class="btn btn-primary btn-back" (click)="goBack()">⇦ {{ 'BACK' | translate }}</button>
+  </div>
+</div>

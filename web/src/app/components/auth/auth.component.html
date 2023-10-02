@@ -1,0 +1,33 @@
+<div class="app-form" *ngIf="!showForgotPassword">
+  <div class="form-container">
+    <form (ngSubmit)="onSignIn()">
+      <h2 style="text-align: center;">{{ 'LOG_IN' | translate }}</h2>
+      <div class="form-group">
+        <input type="text" name="username" [(ngModel)]="form.username" placeholder="{{ 'USERNAME' | translate }}" required>
+      </div>
+      <div class="form-group">
+        <input type="password" name="password" [(ngModel)]="form.password" placeholder="{{ 'PASSWORD' | translate }}" required>
+      </div>
+      <div>
+        <div style="margin-left: 2vh; margin-top: 2vh">
+          <label class="checkbox-container">
+            {{ 'KEEP_ME_LOGGED_IN' | translate }}
+            <input type="checkbox" name="keepLogged" [(ngModel)]="form.keepLogged">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary" type="submit" [disabled]="!areCredentialsValid()">{{ 'SIGN_IN' | translate }}</button>
+        </div>
+        <div class="form-group links">
+          <a (click)="onPasswordChange()">{{ 'FORGOT_PASSWORD' | translate }}?</a>
+          <span>|</span>
+          <a (click)="onRegister()">{{ 'DONT_HAVE_ACCOUNT' | translate }}?</a>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div *ngIf="showForgotPassword">
+  <app-forgot-password (event)="getEvent($event)"></app-forgot-password>
+</div>

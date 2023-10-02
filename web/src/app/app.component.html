@@ -1,0 +1,11 @@
+<a href="https://www.flaticon.com/free-icons/poland" style="display: none" title="poland icons">Poland icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/united-states" style="display: none" title="united states icons">United states icons created by Freepik - Flaticon</a>
+<div class="language-buttons-container">
+  <button class="language-button" (click)="switchLanguage('en')">
+    <span class="flag-icon" [style.background-image]="'url(assets/images/usa-flag.png)'"></span>
+  </button>
+  <button class="language-button" (click)="switchLanguage('pl')">
+    <span class="flag-icon" [style.background-image]="'url(assets/images/poland-flag.png)'"></span>
+  </button>
+</div>
+<router-outlet></router-outlet>

@@ -1,0 +1,22 @@
+<div class="app-form">
+  <app-menu></app-menu>
+  <div *ngIf="!showCode">
+    <button class="btn btn-primary btn-home" (click)="hostGame()">{{ 'HOST_GAME' | translate }}</button>
+    <br>
+    <button class="btn btn-primary btn-home" (click)="insertCode()">{{ 'JOIN_GAME' | translate }}</button>
+    <br>
+    <button class="btn btn-primary btn-home" (click)="goToSets()">{{ 'QUESTION_SETS' | translate}}</button>
+  </div>
+  <div class="form-container" *ngIf="showCode">
+    <form (ngSubmit)="joinGame()">
+      <h2 style="margin-left: 2vh">{{ 'INSERT_CODE' | translate }}</h2>
+      <div class="form-group">
+        <input type="text" id="code" name="code" [(ngModel)]="code" autocomplete="off" required>
+      </div>
+      <div class="button-container">
+        <button type="button" class="btn btn-primary" (click)="cancel()">{{ 'CANCEL' | translate }}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!code">{{ 'SUBMIT' | translate }}</button>
+      </div>
+    </form>
+  </div>
+</div>

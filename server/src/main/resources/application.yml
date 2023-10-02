@@ -1,0 +1,25 @@
+spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: quizgame9999@gmail.com
+    password: lgtflzsfawybqopw
+    protocol: smtp
+    auth: true
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+          from: quizgame9999@gmail.com
+    debug: false
+
+app:
+  verification:
+    url: ${server}${apiPrefix}/email/register-email
+    location: ${origin}
+  user_password:
+    url: ${server}${apiPrefix}/email/password-email
+    location: ${origin}/password/
+  jwt:
+    secret: N9uiu8Hdim12m93P929Asdvqpimc23Ghg
