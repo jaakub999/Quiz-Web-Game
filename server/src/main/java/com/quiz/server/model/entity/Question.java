@@ -1,6 +1,7 @@
 package com.quiz.server.model.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -34,6 +35,7 @@ public class Question {
     private Byte[] image;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Size(min = 4, max = 4)
     private List<Answer> answers = new ArrayList<>();
 
     @ManyToOne

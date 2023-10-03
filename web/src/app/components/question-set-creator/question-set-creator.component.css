@@ -12,6 +12,7 @@ textarea {
 
 .form-container {
   min-width: 700px;
+  position: relative;
 }
 
 .radio-container {
@@ -103,4 +104,32 @@ textarea {
 .btn-image {
   padding: 5px 10px;
   min-width: 135px;
+}
+
+.item-container {
+  bottom: 0;
+  margin-top: 20px;
+}
+
+.item-container button {
+  margin-right: 10px;
+  width: 106px;
+}
+
+.remove-button {
+  background-color: transparent;
+  border: none;
+  color: #c70000;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 10px;
+}
+
+.remove-button:focus {
+  outline: none;
+}
+
+.remove-button:hover {
+  color: #ff0000;
 }

@@ -10,11 +10,8 @@ import { RouteUrl } from "../../shared/route-url";
 })
 export class ChangePasswordComponent implements OnInit {
 
-  form = {
-    password: '',
-    confirmPassword: ''
-  };
-
+  password = '';
+  confirmPassword = '';
   token!: string;
   changed = false;
 
@@ -32,8 +29,8 @@ export class ChangePasswordComponent implements OnInit {
     if (this.isFormValid()) {
       const request = {
         token: this.token,
-        newPassword: this.form.password,
-        confirmNewPassword: this.form.confirmPassword
+        newPassword: this.password,
+        confirmNewPassword: this.confirmPassword
       }
 
       this.userService.changeForgottenPassword(request).subscribe(
@@ -51,6 +48,6 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   isFormValid(): boolean {
-    return this.form.password.trim() !== '' && this.form.confirmPassword.trim() !== '';
+    return this.password.trim() !== '' && this.confirmPassword.trim() !== '';
   }
 }

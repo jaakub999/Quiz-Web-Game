@@ -12,13 +12,10 @@ import { catchError } from "rxjs";
 })
 export class RegisterComponent {
 
-  form = {
-    username: '',
-    password: '',
-    confirmPassword: '',
-    email: ''
-  };
-
+  username = '';
+  password = '';
+  confirmPassword = '';
+  email = '';
   showEmail = false;
   emailType = EmailType.REGISTER;
 
@@ -29,11 +26,11 @@ export class RegisterComponent {
 
   onSubmit() {
     if (this.isFormValid()) {
-      if (this.form.password !== this.form.confirmPassword) {
+      if (this.password !== this.confirmPassword) {
         window.alert('Passwords do not match');
         return;
       } else {
-        this.userService.register(this.form.username, this.form.password, this.form.email).pipe(
+        this.userService.register(this.username, this.password, this.email).pipe(
             catchError((error): any => {
               window.alert('An unexpected error occurred');
               return;
@@ -51,10 +48,10 @@ export class RegisterComponent {
 
   isFormValid(): boolean {
     return (
-        this.form.username.trim() !== '' &&
-        this.form.password.trim() !== '' &&
-        this.form.confirmPassword.trim() !== '' &&
-        this.form.email.trim() !== ''
+        this.username.trim() !== '' &&
+        this.password.trim() !== '' &&
+        this.confirmPassword.trim() !== '' &&
+        this.email.trim() !== ''
     );
   }
 }

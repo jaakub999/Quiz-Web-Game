@@ -40,7 +40,12 @@
   "INSERT": "Insert",
   "CATEGORY": "Category",
   "QUESTION_NR": "QUESTION NR",
-  "NUMBER_OF_QUESTIONS": "NUMBER OF QUESTIONS",
+  "NUMBER_OF_QUESTIONS": "QUESTIONS QUANTITY",
   "POINTS": "Points",
-  "IMAGE_FILE": "Image file"
+  "IMAGE_FILE": "Image file",
+  "ADD": "Add",
+  "RESET": "Reset",
+  "DELETE": "Delete",
+  "SAVE": "Save",
+  "OVERWRITE": "Overwrite"
 }

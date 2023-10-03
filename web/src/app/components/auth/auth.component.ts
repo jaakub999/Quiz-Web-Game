@@ -10,12 +10,10 @@ import { RouteUrl } from "../../shared/route-url";
   styleUrls: ['./auth.component.css']
 })
 export class AuthComponent {
-  form = {
-    username: '',
-    password: '',
-    keepLogged: false
-  };
 
+  username = '';
+  password = '';
+  keepLogged = false;
   showForgotPassword = false;
 
   constructor(
@@ -24,8 +22,8 @@ export class AuthComponent {
   ) {}
 
   onSignIn(): void {
-    const encodedPassword = encodeURIComponent(this.form.password);
-    this.authService.logIn(this.form.username, encodedPassword, this.form.keepLogged).subscribe(
+    const encodedPassword = encodeURIComponent(this.password);
+    this.authService.logIn(this.username, encodedPassword, this.keepLogged).subscribe(
       (response: LoginResponse) => {
         this.authService.setToken(response.token);
         this.router.navigateByUrl(RouteUrl.HOME);
@@ -45,6 +43,6 @@ export class AuthComponent {
   }
 
   areCredentialsValid(): boolean {
-    return this.form.username.trim() !== '' && this.form.password.trim() !== '';
+    return this.username.trim() !== '' && this.password.trim() !== '';
   }
 }

@@ -4,6 +4,6 @@ export interface Question {
   content: string;
   category: string;
   points: number;
-  image: File;
+  image: File | null;
   answers: Answer[];
 }

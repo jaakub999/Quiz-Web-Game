@@ -42,5 +42,10 @@
   "QUESTION_NR": "PYTANIE NR",
   "NUMBER_OF_QUESTIONS": "ILOŚĆ PYTAŃ",
   "POINTS": "Punkty",
-  "IMAGE_FILE": "Plik graficzny"
+  "IMAGE_FILE": "Plik graficzny",
+  "ADD": "Dodaj",
+  "RESET": "Resetuj",
+  "DELETE": "Usuń",
+  "SAVE": "Zapisz",
+  "OVERWRITE": "Nadpisz"
 }
