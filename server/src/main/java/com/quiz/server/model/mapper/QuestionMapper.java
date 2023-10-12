@@ -20,6 +20,7 @@ public class QuestionMapper {
                 .category(dto.getCategory())
                 .points(dto.getPoints())
                 .image(dto.getImage())
+                .imageName(dto.getImageName())
                 .answers(mapDtoListToAnswers(dto.getAnswers()))
                 .build();
     }
@@ -30,6 +31,7 @@ public class QuestionMapper {
                 .category(source.getCategory())
                 .points(source.getPoints())
                 .image(source.getImage())
+                .imageName(source.getImageName())
                 .answers(mapAnswerListToDto(source.getAnswers()))
                 .build();
     }

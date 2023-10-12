@@ -1,7 +1,24 @@
 <div class="app-form">
   <app-menu></app-menu>
-  <div>
+  <div class="table-container">
+    <div *ngIf="questionSets.length === 0" class="centered-div">
+      {{ 'NO_SETS' | translate }}
+    </div>
+    <table>
+      <tbody>
+      <tr
+        *ngFor="let set of questionSets; let i = index"
+        [ngClass]="{'selected': i === selectedRow}"
+        (click)="onRowClicked(i)">
+        <td>{{ set.name }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="button-container">
     <button class="btn btn-primary" (click)="goToCreator()">{{ 'NEW' | translate }}</button>
+    <button *ngIf="isRowSelected() && questionSets.length !== 0" class="btn btn-primary" (click)="edit()">{{ 'EDIT' | translate }}</button>
+    <button *ngIf="isRowSelected() && questionSets.length !== 0" class="btn btn-primary" (click)="delete()">{{ 'DELETE' | translate }}</button>
   </div>
   <div>
     <button class="btn btn-primary btn-back" (click)="goBack()">⇦ {{ 'BACK' | translate }}</button>

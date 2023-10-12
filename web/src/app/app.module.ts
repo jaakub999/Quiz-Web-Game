@@ -17,6 +17,7 @@ import { ForgotPasswordComponent } from './components/auth/forgot-password/forgo
 import { WebSocketService } from "./services/web-socket.service";
 import { QuestionSetCreatorComponent } from './components/question-set-creator/question-set-creator.component';
 import { QuestionSetExplorerComponent } from './components/question-set-explorer/question-set-explorer.component';
+import { ModeComponent } from './components/mode/mode.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/translations/', '.json');
@@ -33,7 +34,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ChangePasswordComponent,
     ForgotPasswordComponent,
     QuestionSetCreatorComponent,
-    QuestionSetExplorerComponent
+    QuestionSetExplorerComponent,
+    ModeComponent
   ],
   imports: [
     BrowserModule,

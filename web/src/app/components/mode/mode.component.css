@@ -1,0 +1,39 @@
+.container {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 200px;
+  align-items: center;
+}
+
+.button-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.textarea-column {
+  display: flex;
+  justify-content: flex-end;
+}
+
+button {
+  margin-bottom: 20px;
+  font-size: 24px;
+  width: 200px;
+  height: 80px;
+}
+
+textarea {
+  background-color: #181818;
+  color: #ffffff;
+  font-family: sans-serif;
+  font-weight: bold;
+  width: 90vh;
+  height: 70vh;
+  min-height: 160px;
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #ffffff;
+  border-radius: 5px;
+  resize: none;
+  outline: none;
+}

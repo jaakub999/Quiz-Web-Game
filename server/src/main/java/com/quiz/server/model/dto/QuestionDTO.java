@@ -11,6 +11,7 @@ public class QuestionDTO {
     private String content;
     private String category;
     private Integer points;
-    private Byte[] image;
+    private String image;
+    private String imageName;
     private List<AnswerDTO> answers;
 }

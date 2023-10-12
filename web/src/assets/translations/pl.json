@@ -47,5 +47,19 @@
   "RESET": "Resetuj",
   "DELETE": "Usuń",
   "SAVE": "Zapisz",
-  "OVERWRITE": "Nadpisz"
+  "OVERWRITE": "Nadpisz",
+  "SAVE_THE_SET": "Zapisz zestaw",
+  "PUBLIC": "Publiczny",
+  "PRIVATE": "Prywatny",
+  "ACCESS": "Dostęp",
+  "QUESTION_SET_NAME": "Nazwa zestawu pytań",
+  "EDIT": "Edytuj",
+  "NO_SETS": "Brak zestawów",
+  "SELECT_MODE": "WYBIERZ TRYB",
+  "CLASSIC": "Klasyczny",
+  "BIDDING": "Licytacja",
+  "DESCRIPTION": {
+    "CLASSIC": "W trybie klasycznym każdy gracz, aby odpowiedzieć na pytanie, musi nacisnąć przycisk przed innymi graczami. Jeśli gracz odpowie poprawnie, otrzyma odpowiednią ilość punktów. Wygrywa gracz, który na koniec zebrał najwięcej punktów.",
+    "BIDDING": "Licytacja polega na"
+  }
 }

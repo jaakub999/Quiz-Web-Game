@@ -11,7 +11,7 @@
     <form (ngSubmit)="joinGame()">
       <h2 style="margin-left: 2vh">{{ 'INSERT_CODE' | translate }}</h2>
       <div class="form-group">
-        <input type="text" name="code" [(ngModel)]="code" autocomplete="off" required>
+        <input type="text" name="code" [(ngModel)]="code" autocomplete="off">
       </div>
       <div class="button-container">
         <button type="button" class="btn btn-primary" (click)="cancel()">{{ 'CANCEL' | translate }}</button>

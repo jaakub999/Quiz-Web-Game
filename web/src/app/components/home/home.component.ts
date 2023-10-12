@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from "@angular/router";
-import { FormBuilder } from "@angular/forms";
 import { RouteUrl } from "../../shared/route-url";
 
 @Component({
@@ -13,13 +12,10 @@ export class HomeComponent {
   showCode = false;
   code = '';
 
-  constructor(
-    private fb: FormBuilder,
-    private router: Router
-  ) {}
+  constructor(private router: Router) {}
 
   hostGame(): void {
-
+    this.router.navigateByUrl(RouteUrl.MODE);
   }
 
   insertCode(): void {
@@ -27,7 +23,7 @@ export class HomeComponent {
   }
 
   goToSets(): void {
-    this.router.navigateByUrl(RouteUrl.EXPLORER)
+    this.router.navigateByUrl(RouteUrl.EXPLORER);
   }
 
   joinGame(): void {

@@ -15,7 +15,8 @@ public enum ExceptionCode {
     E006("User is already verified"),
     E007("JWT token date expired"),
     E008("JWT token is invalid"),
-    E009("Passwords do not match");
+    E009("Passwords do not match"),
+    E010("Question set not found");
 
     private final String message;
 }

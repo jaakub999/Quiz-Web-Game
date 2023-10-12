@@ -21,21 +21,24 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "content")
+    @Column(name = "content", nullable = false)
     private String content;
 
-    @Column(name = "category")
+    @Column(name = "category", nullable = false)
     private String category;
 
-    @Column(name = "points")
+    @Column(name = "points", nullable = false)
     private Integer points;
 
     @Lob
     @Column(name = "image")
-    private Byte[] image;
+    private String image;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @Size(min = 4, max = 4)
+    @Column(name = "image_name")
+    private String imageName;
+
+    @Size(max = 4)
+    @OneToMany(mappedBy = "question", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     private List<Answer> answers = new ArrayList<>();
 
     @ManyToOne

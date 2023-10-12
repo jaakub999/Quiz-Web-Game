@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { RouteUrl } from "../../shared/route-url";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { QuestionSet } from "../../models/question-set";
 import { Question } from "../../models/question";
 import { Answer } from "../../models/answer";
+import { QuestionSetCreatorPage } from "./question-set-creator-page";
+import { QuestionSetService } from "../../services/question-set.service";
+import { EMPTY, map, switchMap } from "rxjs";
 
 @Component({
   selector: 'app-question-set-creator',
@@ -13,32 +16,56 @@ import { Answer } from "../../models/answer";
 export class QuestionSetCreatorComponent implements OnInit {
 
   index = 0;
-  inputA!: string;
-  inputB!: string;
-  inputC!: string;
-  inputD!: string;
-  content!: string;
-  category!: string;
-  selectedOption!: string;
-  sliderValue!: number;
-  file!: File | null;
+  save = false;
+  access = 'public';
+  questionSetName = '';
+  page = new QuestionSetCreatorPage();
   questions: Question[] = [];
-  questionSet!: QuestionSet;
+  keyId!: string | null;
 
   constructor(
-    private router: Router
+    private questionSetService: QuestionSetService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     const slider = document.querySelector('.slider') as HTMLInputElement;
-    slider.addEventListener('input', () => {
-      this.sliderValue = + slider.value;
-    });
 
-    this.prepareForm();
+    if (slider) {
+      slider.addEventListener('input', () => {
+        this.page.points = +slider.value;
+      });
+    }
+
+    this.route.paramMap.pipe(
+      map(params => params.get('key_id')),
+      switchMap(keyId => {
+        if (keyId !== null && keyId !== "new") {
+          this.keyId = keyId;
+          return this.questionSetService.getQuestionSet(keyId);
+        } else {
+          return EMPTY;
+        }
+      })
+    ).subscribe(
+      (questionSet: QuestionSet) => {
+        if (questionSet) {
+          this.questions = questionSet.questions;
+          this.questionSetName = questionSet.name;
+          this.index = 0;
+
+          if (!questionSet.publicAccess) {
+            this.access = 'private';
+          }
+
+          this.page.prepare(this.questions[this.index]);
+        }
+      }
+    );
   }
 
-  addQuestion(overwrite: boolean): void {
+  addOrOverwriteQuestion(overwrite: boolean): void {
     const correct = this.getCorrectAnswers();
     const answers = this.createAnswers(correct);
     const question = this.createQuestion(answers);
@@ -51,13 +78,13 @@ export class QuestionSetCreatorComponent implements OnInit {
       this.questions.push(question);
     }
 
-    this.prepareForm();
+    this.page.prepare();
     this.index = this.questions.length;
   }
 
   switchQuestion(value: number): void {
     this.index = this.index + value;
-    this.prepareForm(this.questions[this.index]);
+    this.page.prepare(this.questions[this.index]);
   }
 
   deleteQuestion(): void {
@@ -66,10 +93,16 @@ export class QuestionSetCreatorComponent implements OnInit {
     }
 
     if (this.index === this.questions.length) {
-      this.prepareForm();
+      this.page.prepare();
     } else {
-      this.prepareForm(this.questions[this.index]);
+      this.page.prepare(this.questions[this.index]);
     }
+  }
+
+  reset(): void {
+    this.questions.splice(0, this.questions.length);
+    this.index = 0;
+    this.page.prepare();
   }
 
   async onFileSelected(event: any): Promise<void> {
@@ -85,22 +118,58 @@ export class QuestionSetCreatorComponent implements OnInit {
       return;
     }
 
-    this.file = selectedFile;
+    this.page.file = await this.fileToBase64(selectedFile);
+    this.page.fileName = selectedFile.name;
   }
 
   removeFile(): void {
-    this.file = null;
+    this.page.file = null;
+    this.page.fileName = null;
   }
 
   getFileName(): string {
-    if (this.file) {
-      const name = this.file.name;
-      const extension = this.file.type.split('/')[1];
+    if (this.page.fileName) {
+      const name = this.page.fileName;
+      const extension = name.split('.')[1];
       const limit = 13;
       return name.length > limit ? name.substring(0, limit) + '...' + extension : name;
     }
 
     return '';
+  }
+
+  goToSave(): void {
+    this.save = true;
+  }
+
+  cancel(): void {
+    this.save = false;
+  }
+
+  saveQuestionSet(): void {
+    const questionSet: QuestionSet = {
+      name: this.questionSetName,
+      publicAccess: this.access === 'public',
+      keyId: null,
+      questions: this.questions
+    };
+
+    if (this.keyId) {
+      questionSet.keyId = this.keyId;
+      this.questionSetService.editQuestionSet(questionSet).subscribe(() => {
+        this.goBack();
+      });
+    }
+
+    else {
+      this.questionSetService.createQuestionSet(questionSet).subscribe(() => {
+        this.goBack();
+      });
+    }
+  }
+
+  isNameValid(): void {
+    this.questionSetName.trim() === '';
   }
 
   goBack(): void {
@@ -109,12 +178,12 @@ export class QuestionSetCreatorComponent implements OnInit {
 
   isFormValid(): boolean {
     return (
-        this.inputA.trim() !== '' &&
-        this.inputB.trim() !== '' &&
-        this.inputC.trim() !== '' &&
-        this.inputD.trim() !== '' &&
-        this.content.trim() !== '' &&
-        this.category.trim() !== ''
+        this.page.inputA.trim() !== '' &&
+        this.page.inputB.trim() !== '' &&
+        this.page.inputC.trim() !== '' &&
+        this.page.inputD.trim() !== '' &&
+        this.page.content.trim() !== '' &&
+        this.page.category.trim() !== ''
     );
   }
 
@@ -128,10 +197,31 @@ export class QuestionSetCreatorComponent implements OnInit {
     return { ok: true };
   }
 
+  private async fileToBase64(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.onload = (event) => {
+        if (event.target && event.target.result) {
+          const base64String: string = event.target.result as string;
+          resolve(base64String);
+        } else {
+          reject(new Error("Failed to read file as Base64"));
+        }
+      };
+
+      reader.onerror = (error) => {
+        reject(error);
+      };
+
+      reader.readAsDataURL(file);
+    });
+  }
+
   private getCorrectAnswers(): boolean[] {
     const correct: boolean[] = Array(4).fill(false);
 
-    switch (this.selectedOption) {
+    switch (this.page.selectedOption) {
       case 'a': {
         correct[0] = true;
         break;
@@ -155,65 +245,21 @@ export class QuestionSetCreatorComponent implements OnInit {
 
   private createAnswers(correct: boolean[]): Answer[] {
     return [
-      { content: this.inputA, correct: correct[0] },
-      { content: this.inputB, correct: correct[1] },
-      { content: this.inputC, correct: correct[2] },
-      { content: this.inputD, correct: correct[3] }
+      { content: this.page.inputA, correct: correct[0] },
+      { content: this.page.inputB, correct: correct[1] },
+      { content: this.page.inputC, correct: correct[2] },
+      { content: this.page.inputD, correct: correct[3] }
     ];
   }
 
   private createQuestion(answers: Answer[]): Question {
     return {
-      content: this.content,
-      category: this.category,
-      points: this.sliderValue,
-      image: this.file,
+      content: this.page.content,
+      category: this.page.category,
+      points: this.page.points,
+      image: this.page.file,
+      imageName: this.page.fileName,
       answers: answers
     };
-  }
-
-  private prepareForm(options?: Partial<Question>): void {
-    const defaultData: Question = {
-      content: '',
-      category: '',
-      points: 1,
-      image: null,
-      answers: [
-        { content: '', correct: true },
-        { content: '', correct: false },
-        { content: '', correct: false },
-        { content: '', correct: false }
-      ]
-    };
-
-    const data: Question = { ...defaultData, ...options };
-    this.setValues(data);
-  }
-
-  private setValues(data: Question): void {
-    this.inputA = data.answers[0].content;
-    this.inputB = data.answers[1].content;
-    this.inputC = data.answers[2].content;
-    this.inputD = data.answers[3].content;
-    this.content = data.content;
-    this.category = data.category;
-    this.file = data.image;
-    this.sliderValue = data.points;
-    this.selectedOption = this.findCorrect(data.answers.findIndex(answer => answer.correct));
-  }
-
-  private findCorrect(correctIndex: number): string {
-    switch (correctIndex) {
-      case 0:
-        return 'a';
-      case 1:
-        return 'b';
-      case 2:
-        return 'c';
-      case 3:
-        return 'd';
-    }
-
-    return 'a';
   }
 }

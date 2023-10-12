@@ -1,6 +1,6 @@
 <div class="app-form">
   <app-menu></app-menu>
-  <div class="form-container">
+  <div *ngIf="!save" class="form-container" style="min-width: 700px;">
     <h2 style="text-align: center">{{ 'CREATOR_HEADER' | translate}}!</h2>
     <br>
     <div>
@@ -11,29 +11,29 @@
     </div>
     <br>
     <div class="left-column">
-      <textarea [(ngModel)]="content" name="content" placeholder="{{ 'QUESTION_CONTENT' | translate }}"></textarea>
+      <textarea [(ngModel)]="page.content" name="content" placeholder="{{ 'QUESTION_CONTENT' | translate }}"></textarea>
       <div class="item-container">
-        <button *ngIf="index === questions.length" class="btn btn-primary" (click)="addQuestion(false)" [disabled]="!isFormValid()">{{ 'ADD' | translate }}</button>
-        <button *ngIf="index !== questions.length" class="btn btn-primary" (click)="addQuestion(true)" [disabled]="!isFormValid()">{{ 'OVERWRITE' | translate }}</button>
-        <button class="btn btn-primary">{{ 'RESET' | translate }}</button>
+        <button *ngIf="index === questions.length" class="btn btn-primary" (click)="addOrOverwriteQuestion(false)" [disabled]="!isFormValid()">{{ 'ADD' | translate }}</button>
+        <button *ngIf="index !== questions.length" class="btn btn-primary" (click)="addOrOverwriteQuestion(true)" [disabled]="!isFormValid()">{{ 'OVERWRITE' | translate }}</button>
+        <button class="btn btn-primary" (click)="reset()">{{ 'RESET' | translate }}</button>
         <button class="btn btn-primary" (click)="deleteQuestion()">{{ 'DELETE' | translate }}</button>
       </div>
       <div class="item-container">
         <button class="btn btn-primary" (click)="switchQuestion(-1)" [disabled]="index === 0">&larr;</button>
-        <button class="btn btn-primary" [disabled]="questions.length === 0">{{ 'SAVE' | translate }}</button>
+        <button class="btn btn-primary" (click)="goToSave()" [disabled]="questions.length === 0">{{ 'SAVE' | translate }}</button>
         <button class="btn btn-primary" (click)="switchQuestion(1)" [disabled]="index === questions.length">&rarr;</button>
       </div>
     </div>
     <div class="right-column">
       <div class="radio-container">
-        <input [(ngModel)]="selectedOption"
+        <input [(ngModel)]="page.selectedOption"
                value="a"
                type="radio"
                class="radio-button"
                name="radio">
         <label class="radio-label">A</label>
         <div class="input-container">
-          <input [(ngModel)]="inputA"
+          <input [(ngModel)]="page.inputA"
                  type="text"
                  class="input-field"
                  placeholder="{{ 'INSERT' | translate }} A"
@@ -41,14 +41,14 @@
         </div>
       </div>
       <div class="radio-container">
-        <input [(ngModel)]="selectedOption"
+        <input [(ngModel)]="page.selectedOption"
                value="b"
                type="radio"
                class="radio-button"
                name="radio">
         <label class="radio-label">B</label>
         <div class="input-container">
-          <input [(ngModel)]="inputB"
+          <input [(ngModel)]="page.inputB"
                  type="text"
                  class="input-field"
                  placeholder="{{ 'INSERT' | translate }} B"
@@ -56,14 +56,14 @@
         </div>
       </div>
       <div class="radio-container">
-        <input [(ngModel)]="selectedOption"
+        <input [(ngModel)]="page.selectedOption"
                value="c"
                type="radio"
                class="radio-button"
                name="radio">
         <label class="radio-label">C</label>
         <div class="input-container">
-          <input [(ngModel)]="inputC"
+          <input [(ngModel)]="page.inputC"
                  type="text"
                  class="input-field"
                  placeholder="{{ 'INSERT' | translate }} C"
@@ -71,14 +71,14 @@
         </div>
       </div>
       <div class="radio-container">
-        <input [(ngModel)]="selectedOption"
+        <input [(ngModel)]="page.selectedOption"
                value="d"
                type="radio"
                class="radio-button"
                name="radio">
         <label class="radio-label">D</label>
         <div class="input-container">
-          <input [(ngModel)]="inputD"
+          <input [(ngModel)]="page.inputD"
                  type="text"
                  class="input-field"
                  placeholder="{{ 'INSERT' | translate }} D"
@@ -86,7 +86,7 @@
         </div>
       </div>
       <div class="input-container">
-        <input [(ngModel)]="category"
+        <input [(ngModel)]="page.category"
                type="text"
                class="input-field"
                style="width: 283px"
@@ -95,16 +95,50 @@
       <br>
       <div class="input-container">
         {{ 'POINTS' | translate }}:
-        <input type="range" min="1" max="10" [(ngModel)]="sliderValue" class="slider">
-        {{ sliderValue }}
+        <input type="range" min="1" max="10" [(ngModel)]="page.points" class="slider">
+        {{ page.points }}
       </div>
       <div class="input-container" style="margin-top: 15px">
         <button class="btn btn-primary btn-image" (click)="fileInput.click()">{{ 'IMAGE_FILE' | translate }}</button>
         <input type="file" id="fileInput" #fileInput style="display: none" (change)="onFileSelected($event)" accept="image/*">
         <label style="font-size: 12px; margin-left: 10px">{{ getFileName() }}</label>
-        <button *ngIf="file" class="remove-button" (click)="removeFile()">&#10006;</button>
+        <button *ngIf="page.file" class="remove-button" (click)="removeFile()">&#10006;</button>
       </div>
     </div>
+  </div>
+  <div *ngIf="save" class="form-container">
+    <form (ngSubmit)="saveQuestionSet()">
+      <h2>{{ 'SAVE_THE_SET' | translate }}</h2>
+      <div class="form-group">
+        <input [(ngModel)]="questionSetName" name="name" type="text" placeholder="{{ 'QUESTION_SET_NAME' | translate }}">
+      </div>
+      <br>
+      <div>
+        {{ 'ACCESS' | translate }}:
+      </div>
+      <br>
+      <div>
+        <input [(ngModel)]="access"
+               value="public"
+               type="radio"
+               class="radio-button"
+               name="access-radio">
+        <label class="radio-label">{{ 'PUBLIC' | translate }}</label>
+      </div>
+      <br>
+      <div>
+        <input [(ngModel)]="access"
+               value="private"
+               type="radio"
+               class="radio-button"
+               name="access-radio">
+        <label class="radio-label">{{ 'PRIVATE' | translate }}</label>
+      </div>
+      <div class="button-container">
+        <button type="button" class="btn btn-primary" (click)="cancel()">{{ 'CANCEL' | translate }}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="isNameValid()">{{ 'SAVE' | translate }}</button>
+      </div>
+    </form>
   </div>
   <div>
     <button class="btn btn-primary btn-back" (click)="goBack()">⇦ {{ 'BACK' | translate }}</button>

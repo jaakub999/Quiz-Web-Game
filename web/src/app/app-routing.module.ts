@@ -8,6 +8,7 @@ import { RegisterComponent } from "./components/register/register.component";
 import { ChangePasswordComponent } from "./components/change-password/change-password.component";
 import { QuestionSetExplorerComponent } from "./components/question-set-explorer/question-set-explorer.component";
 import { QuestionSetCreatorComponent } from "./components/question-set-creator/question-set-creator.component";
+import { ModeComponent } from "./components/mode/mode.component";
 
 const routes: Routes = [
   {
@@ -38,8 +39,13 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: RouteUrl.CREATOR,
+    path: RouteUrl.CREATOR + '/:key_id',
     component: QuestionSetCreatorComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: RouteUrl.MODE,
+    component: ModeComponent,
     canActivate: [AuthGuard]
   }];
 

@@ -47,5 +47,19 @@
   "RESET": "Reset",
   "DELETE": "Delete",
   "SAVE": "Save",
-  "OVERWRITE": "Overwrite"
+  "OVERWRITE": "Overwrite",
+  "SAVE_THE_SET": "Save the set",
+  "PUBLIC": "Public",
+  "PRIVATE": "Private",
+  "ACCESS": "Access",
+  "QUESTION_SET_NAME": "Question set name",
+  "EDIT": "Edit",
+  "NO_SETS": "No sets",
+  "SELECT_MODE": "SELECT MODE",
+  "CLASSIC": "Classic",
+  "BIDDING": "Bidding",
+  "DESCRIPTION": {
+    "CLASSIC": "In the classic mode, each player, in order to answer a question, has to press a button right before the other players. If the answer is correct, the player will receive the corresponding number of points. The player who collected the most points at the end wins.",
+    "BIDDING": "Licytacja polega na"
+  }
 }

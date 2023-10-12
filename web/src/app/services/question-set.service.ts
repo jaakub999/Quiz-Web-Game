@@ -13,15 +13,27 @@ export class QuestionSetService {
 
   constructor(private http: HttpClient) {}
 
-  createQuestionSet(questionSet: QuestionSet): Observable<QuestionSet> {
+  createQuestionSet(questionSet: QuestionSet): Observable<any> {
     const token = localStorage.getItem(JWT_TOKEN_KEY)!;
     const headers = new HttpHeaders().set(HEADER, token);
-    return this.http.post<QuestionSet>(`${this.baseUrl}/create`, questionSet, { headers });
+    return this.http.post(`${this.baseUrl}/create`, questionSet, { headers });
   }
 
   getUserQuestionSets(): Observable<QuestionSet[]> {
     const token = localStorage.getItem(JWT_TOKEN_KEY)!;
     const headers = new HttpHeaders().set(HEADER, token);
     return this.http.get<QuestionSet[]>(`${this.baseUrl}/user-sets`, { headers });
+  }
+
+  getQuestionSet(keyId: string): Observable<QuestionSet> {
+    return this.http.get<QuestionSet>(`${this.baseUrl}/${keyId}`)
+  }
+
+  deleteQuestionSet(keyId: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/delete/${keyId}`);
+  }
+
+  editQuestionSet(questionSet: QuestionSet): Observable<any> {
+    return this.http.put(`${this.baseUrl}/edit`, questionSet);
   }
 }

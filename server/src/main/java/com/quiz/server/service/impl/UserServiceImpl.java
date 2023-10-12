@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
             handleExistingUser(existingUser, username);
         }
 
-        if (userRepository.existsByEmail(email)) {
+        else if (userRepository.existsByEmail(email)) {
             Optional<User> existingUser = userRepository.findByEmail(email);
             handleExistingUser(existingUser, username);
         }

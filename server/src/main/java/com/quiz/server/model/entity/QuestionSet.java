@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class QuestionSet {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "public_access")
+    @Column(name = "public_access", nullable = false)
     private Boolean publicAccess;
 
     @Column(name = "key_id", nullable = false, unique = true)
@@ -33,11 +34,6 @@ public class QuestionSet {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "questionSet", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "questionSet", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     private List<Question> questions = new ArrayList<>();
-
-    @PrePersist
-    private void generateKeyId() {
-        this.keyId = "key_" + id;
-    }
 }
