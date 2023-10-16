@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "question_sets")
+@Table(name = "question_sets", indexes = @Index(columnList = "key_id"))
 public class QuestionSet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

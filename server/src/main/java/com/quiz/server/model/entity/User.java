@@ -34,4 +34,8 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     private List<QuestionSet> questionSets = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "session_id")
+    private Session session;
 }

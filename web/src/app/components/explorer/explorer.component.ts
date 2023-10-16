@@ -2,16 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { RouteUrl } from "../../shared/route-url";
 import { Router } from "@angular/router";
 import { QuestionSetService } from "../../services/question-set.service";
-import { QuestionSet } from "../../models/question-set";
+import { QuestionSetResponse } from "../../models/question-set-response";
 
 @Component({
   selector: 'app-question-set-explorer',
-  templateUrl: './question-set-explorer.component.html',
-  styleUrls: ['./question-set-explorer.component.css']
+  templateUrl: './explorer.component.html',
+  styleUrls: ['./explorer.component.css']
 })
-export class QuestionSetExplorerComponent implements OnInit {
+export class ExplorerComponent implements OnInit {
 
-  questionSets: QuestionSet[] = [];
+  questionSets: QuestionSetResponse[] = [];
   selectedRow!: number;
 
   constructor(
@@ -56,8 +56,8 @@ export class QuestionSetExplorerComponent implements OnInit {
 
   private fetchQuestionSets(): void {
     this.questionSetService.getUserQuestionSets().subscribe(
-      (data: QuestionSet[]) => {
-        this.questionSets = data;
+      (response: QuestionSetResponse[]) => {
+        this.questionSets = response;
       });
   }
 }

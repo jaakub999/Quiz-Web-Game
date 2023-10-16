@@ -17,12 +17,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmailServiceImpl implements EmailService {
 
+    @Value("${spring.mail.properties.mail.smtp.from}")
+    private String fromEmail;
+
     private final JavaMailSender javaMailSender;
     private final VerificationService verificationService;
     private final AppProperties appProperties;
-
-    @Value("${spring.mail.properties.mail.smtp.from}")
-    private String fromEmail;
 
     @Autowired
     public EmailServiceImpl(JavaMailSender javaMailSender,

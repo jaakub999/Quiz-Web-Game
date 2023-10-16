@@ -1,6 +1,7 @@
 package com.quiz.server.rest;
 
 import com.quiz.server.model.dto.QuestionSetDTO;
+import com.quiz.server.response.QuestionSetResponse;
 import com.quiz.server.service.QuestionSetService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,7 @@ public class QuestionSetController {
     }
 
     @GetMapping("/user-sets")
-    public ResponseEntity<List<QuestionSetDTO>> getUserQuestionSets(@RequestHeader(HEADER) String token) {
+    public ResponseEntity<List<QuestionSetResponse>> getUserQuestionSets(@RequestHeader(HEADER) String token) {
         return ResponseEntity.ok(questionSetService.getUserQuestionSets(token));
     }
 

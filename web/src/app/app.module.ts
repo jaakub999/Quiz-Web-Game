@@ -15,9 +15,12 @@ import { MenuComponent } from './components/menu/menu.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { ForgotPasswordComponent } from './components/auth/forgot-password/forgot-password.component';
 import { WebSocketService } from "./services/web-socket.service";
-import { QuestionSetCreatorComponent } from './components/question-set-creator/question-set-creator.component';
-import { QuestionSetExplorerComponent } from './components/question-set-explorer/question-set-explorer.component';
+import { CreatorComponent } from './components/creator/creator.component';
+import { ExplorerComponent } from './components/explorer/explorer.component';
 import { ModeComponent } from './components/mode/mode.component';
+import { LobbyComponent } from './components/lobby/lobby.component';
+import { LobbyPlayerTableComponent } from './components/lobby/lobby-player-table/lobby-player-table.component';
+import { LobbySetsTableComponent } from './components/lobby/lobby-sets-table/lobby-sets-table.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/translations/', '.json');
@@ -33,9 +36,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     MenuComponent,
     ChangePasswordComponent,
     ForgotPasswordComponent,
-    QuestionSetCreatorComponent,
-    QuestionSetExplorerComponent,
-    ModeComponent
+    CreatorComponent,
+    ExplorerComponent,
+    ModeComponent,
+    LobbyComponent,
+    LobbyPlayerTableComponent,
+    LobbySetsTableComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,15 @@
+table {
+  width: 100vh;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-left: 40px;
+}
+
+.button-container button {
+  margin-top: 30px;
+  width: 100px;
+}

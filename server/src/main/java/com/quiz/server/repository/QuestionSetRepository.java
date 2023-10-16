@@ -15,5 +15,7 @@ public interface QuestionSetRepository extends JpaRepository<QuestionSet, Long> 
 
     Optional<QuestionSet> findByKeyId(String keyId);
 
+    boolean existsByKeyId(String keyId);
+
     void deleteByKeyId(String keyId);
 }

@@ -4,22 +4,22 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { QuestionSet } from "../../models/question-set";
 import { Question } from "../../models/question";
 import { Answer } from "../../models/answer";
-import { QuestionSetCreatorPage } from "./question-set-creator-page";
+import { CreatorPage } from "./creator-page";
 import { QuestionSetService } from "../../services/question-set.service";
 import { EMPTY, map, switchMap } from "rxjs";
 
 @Component({
-  selector: 'app-question-set-creator',
-  templateUrl: './question-set-creator.component.html',
-  styleUrls: ['./question-set-creator.component.css']
+  selector: 'app-creator',
+  templateUrl: './creator.component.html',
+  styleUrls: ['./creator.component.css']
 })
-export class QuestionSetCreatorComponent implements OnInit {
+export class CreatorComponent implements OnInit {
 
   index = 0;
   save = false;
   access = 'public';
   questionSetName = '';
-  page = new QuestionSetCreatorPage();
+  page = new CreatorPage();
   questions: Question[] = [];
   keyId!: string | null;
 

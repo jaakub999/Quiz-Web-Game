@@ -1,6 +1,6 @@
 import { Question } from "../../models/question";
 
-export class QuestionSetCreatorPage {
+export class CreatorPage {
   inputA: string;
   inputB: string;
   inputC: string;

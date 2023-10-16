@@ -14,14 +14,8 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  register(username: string, password: string, email: string): Observable<User> {
-    const user = {
-      username,
-      password,
-      email,
-      verified: false
-    };
-    return this.http.post<User>(`${this.baseUrl}/register`, user);
+  register(user: User): Observable<any> {
+    return this.http.post(`${this.baseUrl}/register`, user);
   }
 
   changeForgottenPassword(request: ChangePasswordRequest): Observable<any> {

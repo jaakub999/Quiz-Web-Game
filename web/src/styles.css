@@ -23,15 +23,17 @@ body, html {
 }
 
 table {
-  width: 100vh;
   background-color: transparent;
   border-radius: 5px;
   padding: 10px;
+  border-collapse: separate;
+  border-spacing: 0;
 }
 
 table th {
-  background-color: #000000;
-  text-align: left;
+  background-color: transparent;
+  color: white;
+  text-align: center;
   padding: 8px;
 }
 
@@ -41,16 +43,12 @@ table td {
   text-align: left;
   padding: 8px;
   height: 50px;
+  position: relative;
 }
 
-table td:hover {
+table tr:hover td {
   background-color: #3d3d3d;
   cursor: pointer;
-}
-
-table tr {
-  background-color: #131313;
-  height: 50px;
 }
 
 table tr.selected {
@@ -226,6 +224,22 @@ table tr.selected {
   justify-content: space-between;
   margin-top: 24px;
 }
+
+.table-container {
+  background-color: #222;
+  height: 80vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border: 2px solid #fff;
+}
+
+.centered-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50%;
+}
+
 
 ::-webkit-scrollbar {
   width: 10px;

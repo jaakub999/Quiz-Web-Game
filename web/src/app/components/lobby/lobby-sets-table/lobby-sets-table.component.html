@@ -1,0 +1,45 @@
+<section class="app-form">
+  <div class="table-container" style="height: 60vh">
+    <button class="tab"
+            [ngClass]="{ 'active': activeTab === 'public' }"
+            (click)="changeTab('public')">
+      {{ 'PUBLIC' | translate }}
+    </button>
+    <button class="tab"
+            [ngClass]="{ 'active': activeTab === 'mine' }"
+            (click)="changeTab('mine')">
+      {{ 'MINE' | translate }}
+    </button>
+    <div *ngIf="activeTab ==='public'">
+      <table style="width: 60vh">
+        <thead>
+          <tr>
+            <th>{{ 'SET' | translate }}</th>
+            <th>{{ 'AUTHOR' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let questionSet of publicQuestionSets">
+            <td>{{ questionSet.questionSetName }}</td>
+            <td>{{ questionSet.userUsername }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="activeTab ==='mine'">
+      <table style="width: 60vh">
+        <thead>
+        <tr>
+          <th>{{ 'SET' | translate }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let questionSet of userQuestionSets">
+          <td>{{ questionSet.name }}</td>
+
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

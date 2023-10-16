@@ -13,7 +13,7 @@ import static com.quiz.server.model.mapper.QuestionSetMapper.mapQuestionSetListT
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserMapper {
 
-    public static UserDTO mapUserToDto(User source) {
+    private static UserDTO mapUserToDto(User source) {
         return UserDTO.builder()
                 .username(source.getUsername())
                 .password(source.getPasswordHash())
@@ -23,7 +23,7 @@ public class UserMapper {
                 .build();
     }
 
-    public static List<UserDTO> mapUserListToDto(List<User> source) {
+    protected static List<UserDTO> mapUserListToDto(List<User> source) {
         return source.stream()
                 .map(UserMapper::mapUserToDto)
                 .collect(Collectors.toList());

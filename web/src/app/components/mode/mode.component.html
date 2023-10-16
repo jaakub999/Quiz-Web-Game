@@ -1,6 +1,18 @@
 <div class="app-form">
   <app-menu></app-menu>
   <div class="container">
-
+    <div class="button-column">
+      <button class="btn btn-primary btn-mode" (mouseenter)="setMode(1)" (mouseleave)="setMode(0)" (click)="createLobby()">{{ 'CLASSIC' | translate }}</button>
+      <button class="btn btn-primary btn-mode" (mouseenter)="setMode(2)" (mouseleave)="setMode(0)">{{ 'BIDDING' | translate }}</button>
+    </div>
+    <div class="area-column">
+      <div *ngIf="mode === Mode.CLASSIC">
+        {{ 'DESCRIPTION.CLASSIC' | translate }}
+      </div>
+      <div *ngIf="mode === Mode.BIDDING">
+        {{ 'DESCRIPTION.BIDDING' | translate }}
+      </div>
+    </div>
+    <button class="btn btn-primary btn-back" (click)="goBack()">⇦ {{ 'BACK' | translate }}</button>
   </div>
 </div>

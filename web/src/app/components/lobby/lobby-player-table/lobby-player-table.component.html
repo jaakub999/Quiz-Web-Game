@@ -1,0 +1,16 @@
+<section class="app-form">
+  <div class="table-container" style="height: 60vh">
+    <table style="width: 60vh">
+      <thead>
+        <tr>
+          <th>{{ 'PLAYERS' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let player of players">
+          <td>{{ player.username }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

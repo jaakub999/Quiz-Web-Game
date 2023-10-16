@@ -1,6 +1,7 @@
-import {ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot} from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } from '@angular/router';
 import { Injectable } from "@angular/core";
 import { AuthService } from "../services/auth.service";
+import { RouteUrl } from "../shared/route-url";
 
 @Injectable({
   providedIn: "root"
@@ -17,7 +18,7 @@ export class AuthGuard {
       return true;
     }
 
-    this.router.navigate(['/login'], {
+    this.router.navigate([RouteUrl.AUTH], {
       queryParams: { returnUrl: state.url }
     });
 

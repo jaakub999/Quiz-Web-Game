@@ -10,19 +10,8 @@
   flex-direction: column;
 }
 
-.textarea-column {
+.area-column {
   display: flex;
-  justify-content: flex-end;
-}
-
-button {
-  margin-bottom: 20px;
-  font-size: 24px;
-  width: 200px;
-  height: 80px;
-}
-
-textarea {
   background-color: #181818;
   color: #ffffff;
   font-family: sans-serif;
@@ -34,6 +23,11 @@ textarea {
   font-size: 16px;
   border: 2px solid #ffffff;
   border-radius: 5px;
-  resize: none;
-  outline: none;
+}
+
+.btn-mode {
+  margin-bottom: 20px;
+  font-size: 24px;
+  width: 200px;
+  height: 80px;
 }

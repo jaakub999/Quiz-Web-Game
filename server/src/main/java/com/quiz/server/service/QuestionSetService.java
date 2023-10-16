@@ -1,6 +1,7 @@
 package com.quiz.server.service;
 
 import com.quiz.server.model.dto.QuestionSetDTO;
+import com.quiz.server.response.QuestionSetResponse;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
@@ -10,7 +11,7 @@ public interface QuestionSetService {
 
     void createQuestionSet(@NotNull String token, QuestionSetDTO dto);
 
-    List<QuestionSetDTO> getUserQuestionSets(@NotNull String token);
+    List<QuestionSetResponse> getUserQuestionSets(@NotNull String token);
 
     Optional<QuestionSetDTO> getQuestionSet(String keyId);
 

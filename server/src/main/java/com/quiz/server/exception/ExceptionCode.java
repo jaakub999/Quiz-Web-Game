@@ -16,7 +16,8 @@ public enum ExceptionCode {
     E007("JWT token date expired"),
     E008("JWT token is invalid"),
     E009("Passwords do not match"),
-    E010("Question set not found");
+    E010("Question set not found"),
+    E011("Session not found");
 
     private final String message;
 }

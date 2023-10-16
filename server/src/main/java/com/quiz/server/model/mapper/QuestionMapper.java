@@ -14,7 +14,7 @@ import static com.quiz.server.model.mapper.AnswerMapper.mapDtoListToAnswers;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class QuestionMapper {
 
-    public static Question mapDtoToQuestion(QuestionDTO dto) {
+    private static Question mapDtoToQuestion(QuestionDTO dto) {
         return Question.builder()
                 .content(dto.getContent())
                 .category(dto.getCategory())
@@ -25,7 +25,7 @@ public class QuestionMapper {
                 .build();
     }
 
-    public static QuestionDTO mapQuestionToDto(Question source) {
+    private static QuestionDTO mapQuestionToDto(Question source) {
         return QuestionDTO.builder()
                 .content(source.getContent())
                 .category(source.getCategory())
@@ -36,13 +36,13 @@ public class QuestionMapper {
                 .build();
     }
 
-    public static List<Question> mapDtoListToQuestions(List<QuestionDTO> dtos) {
+    protected static List<Question> mapDtoListToQuestions(List<QuestionDTO> dtos) {
         return dtos.stream()
                 .map(QuestionMapper::mapDtoToQuestion)
                 .collect(Collectors.toList());
     }
 
-    public static List<QuestionDTO> mapQuestionListToDto(List<Question> source) {
+    protected static List<QuestionDTO> mapQuestionListToDto(List<Question> source) {
         return source.stream()
                 .map(QuestionMapper::mapQuestionToDto)
                 .collect(Collectors.toList());

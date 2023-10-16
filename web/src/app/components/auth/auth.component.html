@@ -3,10 +3,10 @@
     <form (ngSubmit)="onSignIn()">
       <h2 style="text-align: center;">{{ 'LOG_IN' | translate }}</h2>
       <div class="form-group">
-        <input type="text" name="username" [(ngModel)]="username" placeholder="{{ 'USERNAME' | translate }}">
+        <input type="text" name="username" [(ngModel)]="username" placeholder="{{ 'USERNAME' | translate }}" title="{{ 'USERNAME' | translate }}">
       </div>
       <div class="form-group">
-        <input type="password" name="password" [(ngModel)]="password" placeholder="{{ 'PASSWORD' | translate }}">
+        <input type="password" name="password" [(ngModel)]="password" placeholder="{{ 'PASSWORD' | translate }}" title="{{ 'PASSWORD' | translate }}">
       </div>
       <div>
         <div style="margin-left: 2vh; margin-top: 2vh">

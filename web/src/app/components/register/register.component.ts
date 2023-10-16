@@ -4,6 +4,7 @@ import { UserService } from "../../services/user.service";
 import { RouteUrl } from "../../shared/route-url";
 import { EmailType } from "../../shared/email-type";
 import { catchError } from "rxjs";
+import {User} from "../../models/user";
 
 @Component({
   selector: 'app-register',
@@ -30,7 +31,14 @@ export class RegisterComponent {
         window.alert('Passwords do not match');
         return;
       } else {
-        this.userService.register(this.username, this.password, this.email).pipe(
+        const user: User = {
+          username: this.username,
+          password: this.password,
+          email: this.email,
+          verified: false
+        };
+
+        this.userService.register(user).pipe(
             catchError((error): any => {
               window.alert('An unexpected error occurred');
               return;

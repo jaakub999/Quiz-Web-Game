@@ -11,14 +11,16 @@ import com.quiz.server.model.entity.User;
 import com.quiz.server.model.mapper.QuestionSetMapper;
 import com.quiz.server.repository.QuestionSetRepository;
 import com.quiz.server.repository.UserRepository;
+import com.quiz.server.response.QuestionSetResponse;
 import com.quiz.server.service.AuthenticationService;
 import com.quiz.server.service.QuestionSetService;
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
+import java.security.SecureRandom;
+import java.util.*;
+import java.util.stream.IntStream;
 
 import static com.quiz.server.exception.ExceptionCode.E010;
 import static com.quiz.server.model.mapper.QuestionSetMapper.mapDtoToQuestionSet;
@@ -28,6 +30,8 @@ import static com.quiz.server.model.mapper.QuestionSetMapper.mapQuestionSetListT
 @AllArgsConstructor
 public class QuestionSetServiceImpl implements QuestionSetService {
 
+    private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    private static final Integer KEY_LENGTH = 35;
     private static final Integer ANSWERS_LENGTH = 4;
 
     private final UserRepository userRepository;
@@ -39,7 +43,15 @@ public class QuestionSetServiceImpl implements QuestionSetService {
     public void createQuestionSet(String token, QuestionSetDTO dto) {
         QuestionSet questionSet = mapDtoToQuestionSet(dto);
         User user = authenticationService.getUserByToken(token);
+        String questionSetName = questionSet.getName();
+        String username = user.getUsername();
+        String keyId;
 
+        do {
+            keyId = generateKeyId(questionSetName, username);
+        } while (questionSetRepository.existsByKeyId(keyId));
+
+        questionSet.setKeyId(keyId);
         questionSet.setUser(user);
         user.getQuestionSets().add(questionSet);
 
@@ -54,11 +66,15 @@ public class QuestionSetServiceImpl implements QuestionSetService {
     }
 
     @Override
-    public List<QuestionSetDTO> getUserQuestionSets(String token) {
+    public List<QuestionSetResponse> getUserQuestionSets(String token) {
         User user = authenticationService.getUserByToken(token);
         List<QuestionSet> questionSets = questionSetRepository.findByUser(user);
+        List<QuestionSetResponse> userSets = new ArrayList<>();
 
-        return mapQuestionSetListToDto(questionSets);
+        for (QuestionSet questionSet : questionSets)
+            userSets.add(new QuestionSetResponse(questionSet.getName(), questionSet.getKeyId()));
+
+        return userSets;
     }
 
     @Override
@@ -129,6 +145,17 @@ public class QuestionSetServiceImpl implements QuestionSetService {
         }
 
         questionSetRepository.save(questionSet);
+    }
+
+    private String generateKeyId(String setName, String username) {
+        SecureRandom random = new SecureRandom();
+        StringBuilder sb = new StringBuilder(KEY_LENGTH);
+        IntStream.range(0, KEY_LENGTH).map(i -> random.nextInt(CHARACTERS.length()))
+                .forEach(randomIndex -> {
+                    sb.append(CHARACTERS.charAt(randomIndex));
+                });
+
+        return "key_" + username + "_" + setName + "_" + sb;
     }
 
     private void updateQuestion(Question question, QuestionDTO dto) {

@@ -5,5 +5,6 @@ export enum RouteUrl {
   PASSWORD_TOKEN = 'password/:token',
   EXPLORER = 'explorer',
   CREATOR = 'creator',
-  MODE = 'mode'
+  MODE = 'mode',
+  LOBBY = 'lobby'
 }
